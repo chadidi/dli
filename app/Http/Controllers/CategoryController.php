@@ -6,6 +6,7 @@ use App\Models\Category;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use App\Http\Requests\CreateCategory;
+use App\Http\Requests\UpdateCategory;
 
 class CategoryController extends Controller
 {
@@ -73,9 +74,26 @@ class CategoryController extends Controller
      * @param  \App\Models\Category  $category
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Category $category)
+    public function update(UpdateCategory $request, Category $category)
     {
-        //
+        $category->name = $request->name;
+
+        if ($request->slug) {
+            $category->slug = $request->slug;
+        }
+
+        if (!$category->save()) {
+            return response()->json([
+                'status' => 'success',
+                'message' => __('messages.failed'),
+            ], 429);
+        }
+
+        return response()->json([
+            'status' => 'success',
+            'message' => __('messages.updated', ['model' => 'category']),
+            'category' => $category,
+        ], 200);
     }
 
     /**
