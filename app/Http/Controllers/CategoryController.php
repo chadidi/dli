@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\Category;
+use Illuminate\Support\Str;
 use Illuminate\Http\Request;
+use App\Http\Requests\CreateCategory;
 
 class CategoryController extends Controller
 {
@@ -29,9 +31,24 @@ class CategoryController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(CreateCategory $request)
     {
-        //
+        $category = new Category;
+        $category->name = $request->name;
+        $category->slug = $request->slug ?? Str::slug($request->name);
+
+        if (!$category->save()) {
+            return response()->json([
+                'status' => 'success',
+                'message' => __('messages.failed'),
+            ], 429);
+        }
+
+        return response()->json([
+            'status' => 'success',
+            'message' => __('messages.created', ['model' => 'category']),
+            'category' => $category,
+        ], 200);
     }
 
     /**
