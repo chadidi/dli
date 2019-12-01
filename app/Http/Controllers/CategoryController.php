@@ -14,7 +14,13 @@ class CategoryController extends Controller
      */
     public function index()
     {
-        //
+        $categories = Category::paginate(10);
+
+        return response()->json([
+            'status' => 'success',
+            'message' => __('messages.indexed', ['model' => 'categorie']),
+            'categories' => $categories,
+        ], 200);
     }
 
     /**
