@@ -59,7 +59,11 @@ class CategoryController extends Controller
      */
     public function show(Category $category)
     {
-        //
+        return response()->json([
+            'status' => 'success',
+            'message' => __('messages.retrieved', ['model' => 'category']),
+            'category' => $category,
+        ], 200);
     }
 
     /**
