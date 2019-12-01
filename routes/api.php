@@ -12,3 +12,5 @@
 */
 
 Route::apiResource('categories', 'CategoryController');
+
+Route::apiResource('courses', 'CourseController');
