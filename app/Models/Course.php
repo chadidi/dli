@@ -2,17 +2,26 @@
 
 namespace App\Models;
 
+use App\Traits\HasSlug;
 use Illuminate\Database\Eloquent\Model;
 
-class Category extends Model
+class Course extends Model
 {
+    use HasSlug;
+
+    protected $with = ['category'];
+    protected $hidden = ['category_id'];
+
     /**
      * The attributes that are mass assignable.
      *
      * @var array
      */
     protected $fillable = [
+        'category_id',
         'name',
+        'image',
+        'description',
         'slug',
     ];
 
@@ -26,8 +35,8 @@ class Category extends Model
         return 'slug';
     }
 
-    public function courses()
+    public function category()
     {
-        return $this->hasMany(Course::class);
+        return $this->belongsTo(Category::class);
     }
 }
