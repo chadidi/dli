@@ -11,6 +11,8 @@
 |
 */
 
+Route::post('upload', 'UploadController');
+
 Route::apiResource('categories', 'CategoryController');
 
 Route::apiResource('courses', 'CourseController');
