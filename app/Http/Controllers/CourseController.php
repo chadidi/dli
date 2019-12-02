@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\CreateCourse;
+use App\Http\Requests\UpdateCourse;
 use App\Models\Course;
 use Illuminate\Http\Request;
 
@@ -14,7 +16,13 @@ class CourseController extends Controller
      */
     public function index()
     {
-        //
+        $courses = Course::paginate(10);
+
+        return response()->json([
+            'status' => 'success',
+            'message' => __('messages.indexed', ['model' => 'course']),
+            'courses' => $courses,
+        ], 200);
     }
 
     /**
@@ -23,9 +31,15 @@ class CourseController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(CreateCourse $request)
     {
-        //
+        $course = Course::create($request->all());
+
+        return response()->json([
+            'status' => 'success',
+            'message' => __('messages.created', ['model' => 'course']),
+            'course' => $course,
+        ], 200);
     }
 
     /**
@@ -36,7 +50,11 @@ class CourseController extends Controller
      */
     public function show(Course $course)
     {
-        //
+        return response()->json([
+            'status' => 'success',
+            'message' => __('messages.retrieved', ['model' => 'course']),
+            'course' => $course,
+        ], 200);
     }
 
     /**
@@ -46,9 +64,15 @@ class CourseController extends Controller
      * @param  \App\Models\Course  $course
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Course $course)
+    public function update(UpdateCourse $request, Course $course)
     {
-        //
+        $course->update($request->all());
+
+        return response()->json([
+            'status' => 'success',
+            'message' => __('messages.updated', ['model' => 'course']),
+            'course' => $course,
+        ], 200);
     }
 
     /**
@@ -59,6 +83,11 @@ class CourseController extends Controller
      */
     public function destroy(Course $course)
     {
-        //
+        $course->delete();
+
+        return response()->json([
+            'status' => 'success',
+            'message' => __('messages.deleted', ['model' => 'course']),
+        ], 200);
     }
 }
