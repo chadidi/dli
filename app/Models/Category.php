@@ -17,12 +17,17 @@ class Category extends Model
     ];
 
     /**
- * Get the route key for the model.
- *
- * @return string
- */
+     * Get the route key for the model.
+     *
+     * @return string
+     */
     public function getRouteKeyName()
     {
         return 'slug';
+    }
+
+    public function courses()
+    {
+        return $this->hasMany(Course::class);
     }
 }
