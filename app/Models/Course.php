@@ -3,13 +3,19 @@
 namespace App\Models;
 
 use App\Traits\HasSlug;
+use App\Traits\HasImage;
 use Illuminate\Database\Eloquent\Model;
 
 class Course extends Model
 {
     use HasSlug;
+    use HasImage;
 
-    protected $with = ['category'];
+    protected $with = [
+        'category',
+        'image',
+    ];
+
     protected $hidden = ['category_id'];
 
     /**
@@ -20,7 +26,6 @@ class Course extends Model
     protected $fillable = [
         'category_id',
         'name',
-        'image',
         'description',
         'slug',
     ];

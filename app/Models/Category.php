@@ -2,12 +2,14 @@
 
 namespace App\Models;
 
+use App\Traits\HasImage;
 use App\Traits\HasSlug;
 use Illuminate\Database\Eloquent\Model;
 
 class Category extends Model
 {
     use HasSlug;
+    use HasImage;
     /**
      * The attributes that are mass assignable.
      *
@@ -16,6 +18,10 @@ class Category extends Model
     protected $fillable = [
         'name',
         'slug',
+    ];
+
+    protected $with = [
+        'image'
     ];
 
     /**
