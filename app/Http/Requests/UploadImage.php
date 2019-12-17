@@ -2,6 +2,9 @@
 
 namespace App\Http\Requests;
 
+use App\Models\Category;
+use App\Models\Course;
+use App\Models\Image;
 use Illuminate\Foundation\Http\FormRequest;
 
 class UploadImage extends FormRequest
@@ -24,7 +27,12 @@ class UploadImage extends FormRequest
     public function rules()
     {
         return [
-            'image' => 'required|image|max:2000',
+            'image' => [
+                'required',
+                 Image::getRules(),
+            ],
+            'resource' => 'required|in:categories,courses',
+            'resource_id' => 'required|integer',
         ];
     }
 }
